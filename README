@@ -1,0 +1,7 @@
+requirements:
+node.js installed
+express web framework installed
+
+getting started:
+node app.js
+
