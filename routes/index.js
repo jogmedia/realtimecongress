@@ -57,4 +57,29 @@ exports.realtimecongress = function(req, res) {
 
 exports.makeen = function(req, res) {}
 exports.musa = function(req, res) {}
-exports.roy = function(req, res) {}
+
+exports.amendments = function(req, res) {
+var options = {
+	  host: 'api.realtimecongress.org',
+	  port: 80,
+	  path: '/api/v1/amendments.json?apikey=5a7ac9d9396c4c03adb5e9519b7605fb'
+	};
+	
+	console.log(req.params.bioguideid);
+	
+	var service_req = http.get(options, function(service_res) {
+	    var pageData = "";
+	    service_res.setEncoding('utf8');
+	    service_res.on('data', function (chunk) {
+	      pageData += chunk;
+	    });
+
+	    service_res.on('end', function(){
+		var jsObject = JSON.parse(pageData);
+		console.log(jsObject.count);
+		console.log(jsObject.amendments.length);		
+		
+	      res.send(pageData)
+	    });
+	  });
+}
