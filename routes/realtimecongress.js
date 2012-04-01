@@ -1,13 +1,4 @@
-
-/*
- * GET home page.
- */
-
 var http = require('http');
-
-exports.index = function(req, res){
-  res.render('index', { title: 'Voter Control', district: 'Stone Mountain' })
-};
 
 exports.realtimecongress = function(req, res) {
 	var options = {
@@ -34,4 +25,4 @@ exports.realtimecongress = function(req, res) {
 	      res.send(pageData)
 	    });
 	  });
-}
+};
