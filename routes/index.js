@@ -23,7 +23,9 @@ exports.realtimecongress = function(req, res) {
 	//   console.log("Got error: " + e.message);
 	// });
 	
-	var req = http.get(options, function(service_res) {
+	console.log(req.params.bioguideid);
+	
+	var service_req = http.get(options, function(service_res) {
 	    var pageData = "";
 	    service_res.setEncoding('utf8');
 	    service_res.on('data', function (chunk) {
@@ -31,7 +33,28 @@ exports.realtimecongress = function(req, res) {
 	    });
 
 	    service_res.on('end', function(){
+		var jsObject = JSON.parse(pageData);
+		console.log(jsObject.count);
+		console.log(jsObject.bills.length);
+		
+		for(var i=0; i<jsObject.bills.length; i++)
+		{
+			for(var j=0; j<jsObject.bills[i].cosponsors.length; j++)
+			{
+				// console.log(jsObject.bills[i].cosponsors[j].bioguide_id);
+				if (jsObject.bills[i].cosponsors[j].bioguide_id == String(req.params.bioguideid))
+				{
+					console.log("MATCH");
+					console.log(jsObject.bills[i].bill_id);
+				}
+			}
+		}
+		
 	      res.send(pageData)
 	    });
 	  });
 }
+
+exports.makeen = function(req, res) {}
+exports.musa = function(req, res) {}
+exports.roy = function(req, res) {}
