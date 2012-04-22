@@ -55,6 +55,40 @@ exports.realtimecongress = function(req, res) {
 	  });
 }
 
-exports.makeen = function(req, res) {}
+exports.votes = function(req, res) {
+	var options = {
+		host: 'api.realtimecongress.org',
+		port:80,
+		path:'/api/v1/votes.json?apikey=5a7ac9d9396c4c03adb5e9519b7605fb'
+	};
+	console.log(req.params.bioguideid);
+	
+	var service_req = http.get(options, function(service_res) {
+		var pageData = "";
+	    service_res.setEncoding('utf8');
+	    service_res.on('data', function (chunk) {
+	      pageData += chunk;
+	    });
+	    
+	    service_res.on('end', function () {
+	    	var jsObject = JSON.parse(pageData);
+	 	   	for(var x=0; x < jsObject.votes.length;x++){
+	    		if(jsObject.votes[x].voter_ids != undefined)
+	    		{
+	    			if( eval("jsObject.votes[x].voter_ids."+req.params.bioguideid) != undefined)
+	    				console.log('Vote question:'+jsObject.votes[x].question);
+	    		}
+/*
+	    		if( eval("jsObject.votes[x].voter_ids."+req.params.bioguideid) != undefined)
+	    			console.log('Vote number:'+jsObject.votes[x].votenumber);		
+*/
+	    	}  
+	    	res.send('done');
+	    });
+	    
+		
+	});
+	
+}
 exports.musa = function(req, res) {}
 exports.roy = function(req, res) {}
