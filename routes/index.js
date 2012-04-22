@@ -34,6 +34,8 @@ exports.realtimecongress = function(req, res) {
 
 	    service_res.on('end', function(){
 		var jsObject = JSON.parse(pageData);
+		var matches = {};
+		matches.bills = [];
 		console.log(jsObject.count);
 		console.log(jsObject.bills.length);
 		
@@ -46,11 +48,12 @@ exports.realtimecongress = function(req, res) {
 				{
 					console.log("MATCH");
 					console.log(jsObject.bills[i].bill_id);
+					matches.bills.push(jsObject.bills[i]);
 				}
 			}
 		}
-		
-	      res.send(pageData)
+		var matchesText = JSON.stringify(matches);
+	      res.send(matchesText)
 	    });
 	  });
 }
