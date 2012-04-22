@@ -75,18 +75,22 @@ exports.votes = function(req, res) {
 	    
 	    service_res.on('end', function () {
 	    	var jsObject = JSON.parse(pageData);
+	    	var matches = {};
+	    	matches.votes = [];
 	 	   	for(var x=0; x < jsObject.votes.length;x++){
 	    		if(jsObject.votes[x].voter_ids != undefined)
 	    		{
-	    			if( eval("jsObject.votes[x].voter_ids."+req.params.bioguideid) != undefined)
+	    			if( eval("jsObject.votes[x].voter_ids."+req.params.bioguideid) != undefined){
 	    				console.log('Vote question:'+jsObject.votes[x].question);
+	    				matches.votes.push(jsObject.votes[x]);
+	    			}
 	    		}
 /*
 	    		if( eval("jsObject.votes[x].voter_ids."+req.params.bioguideid) != undefined)
 	    			console.log('Vote number:'+jsObject.votes[x].votenumber);		
 */
 	    	}  
-	    	res.send('done');
+	    	res.send(JSON.stringify(matches));
 	    });
 	    
 		
