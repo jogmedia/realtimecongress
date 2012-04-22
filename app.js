@@ -34,5 +34,7 @@ app.get('/', routes.index);
 app.get('/rtc/:bioguideid', routes.realtimecongress);
 app.get('/votes/:bioguideid', routes.votes);
 
+app.get('/amendments', routes.amendments);
+
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
